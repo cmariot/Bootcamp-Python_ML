@@ -1,0 +1,5 @@
+pip list | awk '{ print $1 }' | tail -n +3
+pip list | tail -n +3
+cat /Users/cmariot/bin/miniconda3/conda-meta/numpy-1.21.2-py39h4b4dc7a_0.json    #A revoir, pas sur ...
+python -m pip search tesseract
+python -m pip freeze > requirements.txt
