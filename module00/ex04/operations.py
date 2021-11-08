@@ -48,7 +48,6 @@ def elementary(str1, str2):
         print("Remainder :\t ERROR (modulo by zero)");
 
 if __name__ == "__main__":
-    
     if (len(sys.argv) == 0):
         print("Usage: python operations.py <number1> <number2>");
         print("Example:");
