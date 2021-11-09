@@ -1,19 +1,17 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    whois.py                                           :+:      :+:    :+:    #
+#    filterwords.py                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/11/08 17:16:24 by cmariot           #+#    #+#              #
-#    Updated: 2021/11/08 17:16:26 by cmariot          ###   ########.fr        #
+#    Created: 2021/11/09 10:41:18 by cmariot           #+#    #+#              #
+#    Updated: 2021/11/09 11:23:34 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import sys
-
-def get_argc():
-    return (len(sys.argv) - 1);
+import re
 
 def atoi(str):
     number = 0
@@ -23,31 +21,36 @@ def atoi(str):
         str = str[1:];
     elif (str[0] == '+'):
         str = str[1:];
+    if (len(str) == 0):
+        return None;
     i = 0
     while (i < len(str)):
         if (str[i] >= '0' and str[i] <= '9'):
             number = number * 10 + (ord(str[i]) - ord('0'))
         else:
-            print ("ERROR")
-            return ;
+            return None;
         i = i + 1
     return (sign * number);
 
-def whois():
-    if (get_argc() > 1):
+def filterwords(str, str2):
+    len_to_filter = atoi(str2);
+    if (len_to_filter == None):
         print("ERROR")
         return ;
-    elif (get_argc() == 0):
-        return
-    else:
-        number = atoi(sys.argv[1]);
-        if (number):
-            if (number == 0):
-                print ("I'm Zero.")
-            elif (number % 2 == 0):
-                print ("I'm Even.")
-            else:
-                print ("I'm Odd.")
+    str_list = re.findall(r'\w+', str)
+    i = 0
+    while (i < len(str_list)):
+        if len(str_list[i]) <= len_to_filter:
+            del(str_list[i]);
+        else:
+            i = i + 1
+    print(str_list)
+
 
 if __name__ == "__main__":
-    whois();
+    if (len(sys.argv) <= 2):
+        print("Usage : python filterwords.py [str] [len]")
+    elif (len(sys.argv) >= 4):
+        print("Error, too many args");
+    else:
+        filterwords(sys.argv[1], sys.argv[2]);

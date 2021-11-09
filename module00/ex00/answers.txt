@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    answers.txt                                        :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/11/08 17:16:08 by cmariot           #+#    #+#              #
+#    Updated: 2021/11/08 17:16:10 by cmariot          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 python -m pip list | awk {'print $1'} | tail -n +3
 python -m pip list | tail -n +3
 cat /mnt/nfs/homes/cmariot/miniconda3/pkgs/numpy-1.21.2-py39h20f2e39_0/info/about.json
