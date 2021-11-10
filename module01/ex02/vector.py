@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 23:56:15 by cmariot           #+#    #+#              #
-#    Updated: 2021/11/10 18:08:31 by cmariot          ###   ########.fr        #
+#    Updated: 2021/11/10 23:58:21 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ class Vector:
        # print("type_list_of_floats = " + str(type_list_of_floats));
 
         self.value = []
-        
+
         if (type_list_of_list_of_floats == True or type_list_of_floats == True):
             for elements in value:
                 self.value.append(elements)
@@ -98,6 +98,20 @@ class Vector:
                     self.value[i] = self.value[i] + vector2.value[i]
                     i += 1
 
+    def __radd__(self, vector2):
+        if (self.shape == vector2.shape):
+            self.__add__(vector2);
+        else:
+            i = 0
+            if (type(self.value[0]) == list):
+                while (i < len(self.value)):
+                    self.value[i][0] = self.value[i][0] + vector2.value[i]
+                    i += 1
+            elif (type(self.value[0]) == float):
+                while (i < len(self.value)):
+                    self.value[i] = self.value[i] + vector2.value[i][0]
+                    i += 1
+
     def __sub__(self, vector2):
         if (self.shape == vector2.shape):
             i = 0
@@ -108,6 +122,20 @@ class Vector:
             elif (type(self.value[0]) == float):
                 while (i < len(self.value)):
                     self.value[i] = self.value[i] - vector2.value[i]
+                    i += 1
+
+    def __rsub__(self, vector2):
+        if (self.shape == vector2.shape):
+            self.__sub__(vector2);
+        else:
+            i = 0
+            if (type(self.value[0]) == list):
+                while (i < len(self.value)):
+                    self.value[i][0] = self.value[i][0] - vector2.value[i]
+                    i += 1
+            elif (type(self.value[0]) == float):
+                while (i < len(self.value)):
+                    self.value[i] = self.value[i] - vector2.value[i][0]
                     i += 1
 
     def __truediv__(self, scalar):
@@ -124,6 +152,29 @@ class Vector:
                 self.value[i] = self.value[i] / scalar
                 i += 1
 
+    def __rtruediv__(self, scalar):
+        i = 0
+        new_value = []
+        if (type(self.value[0]) == list):
+            while (i < len(self.value)):
+                if (self.value[i][0] != 0):
+                    new_value.append(scalar / self.value[i][0])
+                else:
+                    print("Error, division by 0.")
+                    return None
+                i += 1
+            return new_value
+        elif (type(self.value[0]) == float):
+            while (i < len(self.value)):
+                if (self.value[i] != 0):
+                    new_value.append(scalar / self.value[i])
+                else:
+                    print("Error, division by 0.")
+                    return None
+                i += 1
+            return new_value
+           
+
     def __mul__(self, scalar):
         i = 0
         if (type(self.value[0]) == list):
@@ -134,6 +185,23 @@ class Vector:
             while (i < len(self.value)):
                 self.value[i] = self.value[i] * scalar
                 i += 1
+
+    def __rmul__(self, scalar):
+        i = 0
+        if (type(self.value[0]) == list):
+            while (i < len(self.value)):
+                self.value[i][0] = scalar * self.value[i][0]
+                i += 1
+        elif (type(self.value[0]) == float):
+            while (i < len(self.value)):
+                self.value[i] = scalar * self.value[i]
+                i += 1
+
+    def __str__(self):
+        return (str(self.value) + " " + str(self.shape))
+
+    def __repr__(self):
+        return (Vector(self.value))
 
     def T(self):
         if (type(self.value[0]) == list):
@@ -167,49 +235,3 @@ class Vector:
                 return result ;
         else:
             print("The dot method works with two vectors of the same type.")
-
-
-    ##TODO
-    #__radd__
-    #__rsub__
-    #__rtruediv__
-    #__rmul__
-    #__str__
-    #__repr__
-
-
-
-if __name__ == "__main__":
-    
-    # INIT
-    v0 = Vector([[0.0], [1.0], [2.0], [3.0]])
-    v1 = Vector([[1.0], [2.0], [3.0], [4.0]])
-    v2 = Vector([0.0, 1.0, 2.0, 3.0])
-    v3 = Vector([1.0, 2.0, 3.0, 4.0])
-    v4 = Vector(3)
-    v5 = Vector(range(10, 15))
-    v6 = Vector(range(15, 20))
-    
-    #VERIF INIT
-    #print(v0.value)
-    #print(v0.shape)
-    
-    # METHODS
-    v0.__add__(v1);
-    v2.__add__(v3);
-    
-    v0.__sub__(v1);
-    v2.__sub__(v3);
-
-    v0.__truediv__(5);
-    v2.__truediv__(5);
-    
-    v0.__mul__(5);
-    v2.__mul__(5);
-
-    v0.T()
-    v2.T()
-
-    result = v1.dot(v2)
-    result = v0.dot(v3)
-
