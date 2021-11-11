@@ -6,14 +6,16 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 23:56:15 by cmariot           #+#    #+#              #
-#    Updated: 2021/11/10 23:58:21 by cmariot          ###   ########.fr        #
+#    Updated: 2021/11/11 02:36:49 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+
+# Define a class Vector : see ./test.py #INIT 
 class Vector:
-    
+
     def __init__(self, value):
-        
+
         type_list = False;
         type_list_of_list = False;
         type_list_of_list_of_floats = False;
@@ -23,7 +25,8 @@ class Vector:
         column_vector = False
         row_vector = False
 
-        # Check the input value type for the init, it could be a list of list of floats, a list of floats, an int or a range.
+        # The class Vector can be init by different types
+        # Get variables as booleans
         if (type(value) == list):
             type_list = True;
             if (type(value[0]) == list):
@@ -50,13 +53,10 @@ class Vector:
             print("The vector must be initialized as a list of list of floats or a list of floats.")
             return ;
 
-       # print("type_list = " + str(type_list));
-       # print("type_list_of_list = " + str(type_list_of_list));
-       # print("type_list_of_list_of_floats = " + str(type_list_of_list_of_floats));
-       # print("type_list_of_floats = " + str(type_list_of_floats));
-
+        # Create a list
         self.value = []
 
+        # Add attributes value and shape to vectors
         if (type_list_of_list_of_floats == True or type_list_of_floats == True):
             for elements in value:
                 self.value.append(elements)
@@ -67,6 +67,7 @@ class Vector:
                 row_vector = True;
                 self.shape = (1, len(self.value))
 
+        # Vector(6)
         elif (type_int == True):
             i = 0.0
             while (i < float(value)):
@@ -74,6 +75,7 @@ class Vector:
                 i += 1.0
             self.shape = (int(i), 1);
 
+        # Vector(range(8, 9)
         elif (type_range == True):
             min = float(value[0])
             max = float(value[-1])
@@ -173,7 +175,6 @@ class Vector:
                     return None
                 i += 1
             return new_value
-           
 
     def __mul__(self, scalar):
         i = 0
@@ -202,6 +203,12 @@ class Vector:
 
     def __repr__(self):
         return (Vector(self.value))
+
+    def __print__(self):
+        print("type_list = " + str(type_list));
+        print("type_list_of_list = " + str(type_list_of_list));
+        print("type_list_of_list_of_floats = " + str(type_list_of_list_of_floats));
+        print("type_list_of_floats = " + str(type_list_of_floats));
 
     def T(self):
         if (type(self.value[0]) == list):
